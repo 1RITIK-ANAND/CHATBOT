@@ -4,7 +4,11 @@ import gradio as gr
 from dotenv import load_dotenv
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+try:
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+except Exception as e:
+    print(f"Failed to initialize OpenAI client: {str(e)}")
+    raise
 
 async def respond(message, history):
     try:
@@ -33,4 +37,6 @@ with gr.Blocks(css=css) as app:
         type="messages"
     )
 
-app.launch()
+if __name__ == "__main__":
+    print("Running chtbot.py directly (not used in Render)")
+    app.launch()
