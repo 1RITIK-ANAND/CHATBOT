@@ -1,6 +1,6 @@
 import gradio as gr
 import os
-from chtbot import respond  # Ensure file name matches
+from chtbot import respond
 
 custom_css = """
 body {
@@ -52,5 +52,5 @@ with gr.Blocks(css=custom_css) as demo:
     clear.click(lambda: ([], ""), None, [chatbot, state])
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 7860))  # Use PORT env variable or default to 7860
-    demo.launch(server_name="0.0.0.0", server_port=port)  # Bind to 0.0.0.0 for Render
+    port = int(os.environ.get('PORT', 7860))
+    demo.launch(server_name="0.0.0.0", server_port=port)
