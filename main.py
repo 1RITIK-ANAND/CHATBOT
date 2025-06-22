@@ -1,5 +1,5 @@
 import gradio as gr
-from chtbot import respond  # ✅ Make sure this is the correct file name: chatbot.py
+from chtbot import respond
 
 custom_css = """
 body {
@@ -34,11 +34,11 @@ with gr.Blocks(css=custom_css) as demo:
 
     chatbot = gr.Chatbot(
         label="Chat with AI",
+        type="messages",
         avatar_images=(
-            "https://i.ibb.co/Y73Pz8vF/user-avatar.png",  # Your image
-            "https://i.ibb.co/gbccxFhS/bot-avatar.png"    # Bot image
-        ),
-         type="messages"
+            "https://i.ibb.co/Y73Pz8vF/user-avatar.png",
+            "https://i.ibb.co/gbccxFhS/bot-avatar.png"
+        )
     )
 
     with gr.Row():
@@ -51,6 +51,4 @@ with gr.Blocks(css=custom_css) as demo:
     clear.click(lambda: ([], ""), None, [chatbot, state])
 
 if __name__ == "__main__":
-    demo.launch()
     demo.launch(server_name="0.0.0.0", server_port=7860)
-
