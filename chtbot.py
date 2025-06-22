@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 try:
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY not found in environment variables")
+    client = OpenAI(api_key=api_key)
 except Exception as e:
     print(f"Failed to initialize OpenAI client: {str(e)}")
     raise
@@ -21,22 +24,9 @@ async def respond(message, history):
     except Exception as e:
         return {"role": "assistant", "content": f"Error: {str(e)}"}
 
-css = """
-#chatbox { background-color: black !important; }
-.gr-button { background-color: orange !important; color: black !important; }
-textarea, input { background-color: #111 !important; color: orange !important; }
-"""
-
-with gr.Blocks(css=css) as app:
-    gr.Markdown("## 🤖 <span style='color:orange;'>AI Chatbot Powered by OpenAI</span>")
-    chat_interface = gr.ChatInterface(
-        fn=respond,
-        chatbot=gr.Chatbot(elem_id="chtbox"),
-        title=None,
-        theme="default",
-        type="messages"
-    )
-
 if __name__ == "__main__":
     print("Running chtbot.py directly (not used in Render)")
+    with gr.Blocks() as app:
+        gr.Markdown("# Test Chatbot")
+        chat_interface = gr.ChatInterface(fn=respond, type="messages")
     app.launch()
